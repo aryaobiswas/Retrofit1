@@ -8,6 +8,5 @@ import retrofit2.http.GET;
 public interface JsonPlaceHolderApi {
 
     @GET("products")
-//    Call<List<Product>> getProducts();
     Call<String> getProducts();
 }
