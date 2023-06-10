@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +30,7 @@ public class ItemActivity extends AppCompatActivity {
         TextView title, price, brand, description, discount, rating;
         ImageSlider imageSlider;
         ArrayList<SlideModel> slideModels = new ArrayList<>();
+        RatingBar ratingBar;
 
         title = findViewById(R.id.item_title);
         price = findViewById(R.id.item_price);
@@ -46,6 +48,10 @@ public class ItemActivity extends AppCompatActivity {
             rating.setText(String.valueOf(item.getRating()));
             description.setText(item.getDescription());
 
+            float storedRating = Float.parseFloat(String.valueOf(item.getRating()));
+            ratingBar = findViewById(R.id.rating_Bar);
+            ratingBar.setRating(storedRating);
+
             String imagesString = item.getImages();
             imagesString = imagesString.substring(1, imagesString.length() - 1);
             String[] imageUrls = imagesString.replaceAll("\\\\/", "/").replaceAll("\"", "").split(",");
@@ -54,16 +60,7 @@ public class ItemActivity extends AppCompatActivity {
 
             for (int i = 0; i < imageUrls.length; i++)
             {
-                if (imageUrls.length > 0) {
-
-                    slideModels.add(new SlideModel(imageUrls[i], ScaleTypes.FIT));
-//                    String imageUrl = imageUrls[i];
-
-//                    Glide.with(this)
-//                            .load(imageUrl)
-//                            .into(imagesImageView);
-//                    Log.d("Arya3", "onResponse: " + imageUrl);
-                }
+                slideModels.add(new SlideModel(imageUrls[i], ScaleTypes.FIT));
             }
             imageSlider.setImageList(slideModels, ScaleTypes.FIT);
 

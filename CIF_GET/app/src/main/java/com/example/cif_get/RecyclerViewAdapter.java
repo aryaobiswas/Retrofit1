@@ -4,9 +4,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +22,14 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<ModelClass> Data;
+    private ArrayList<ModelClass> Data;
+    private ArrayList<ModelClass> cartItems;
+
 
     RecyclerViewAdapter(Context context, ArrayList<ModelClass> Data){
         this.context=context;
         this.Data=Data;
+        cartItems = new ArrayList<>();
     }
 
     @NonNull
@@ -56,7 +61,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
+        holder.cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    ModelClass cart = Data.get(adapterPosition);
+                    Intent intent = new Intent(context, CartActivity.class);
+                    intent.putExtra("cart", cart);
+                    context.startActivity(intent);
 
+                }
+            }
+        });
+
+//        Log.d("Aryarecycler", "onResponse: "+"CartWorking");
+    }
+
+    public ArrayList<ModelClass> getCartItems() {
+        return cartItems;
     }
 
     @Override
@@ -73,6 +96,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView title, price, brand, description;
         ImageView itemImg;
+        Button cartButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -81,6 +105,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             brand = itemView.findViewById(R.id.text_brand);
             price = itemView.findViewById(R.id.text_price);
             description = itemView.findViewById(R.id.description);
+            cartButton = itemView.findViewById(R.id.CartButton);
 
         }
     }

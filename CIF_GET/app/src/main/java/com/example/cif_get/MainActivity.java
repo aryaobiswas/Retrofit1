@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<String> data = showData(products);
                         ModelClass model;
 
-                        for (int i=0;i<data.size();i=i+9) {
-                            model = new ModelClass(data.get(i), data.get(i + 1), data.get(i + 2), data.get(i + 3), data.get(i + 4), data.get(i + 5),data.get(i + 6),data.get(i + 7),data.get(i + 8));
+                        for (int i=0;i<data.size();i=i+10) {
+                            model = new ModelClass(data.get(i), data.get(i + 1), data.get(i + 2), data.get(i + 3), data.get(i + 4), data.get(i + 5),data.get(i + 6),data.get(i + 7),data.get(i + 8),data.get(i+9));
                             Data.add(model);
                             Log.d("Arya", "onResponse: "+data.get(i+2));
                         }
@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
             String str=jsonObject.getString("products");
             JSONArray jsonArray=new JSONArray(str);
 
-//            Log.d("Arya1", "onResponse: " + products);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject1=jsonArray.getJSONObject(i);
+                Data.add(jsonObject1.getString("id"));
                 Data.add(jsonObject1.getString("title"));
                 Data.add(jsonObject1.getString("brand"));
                 Data.add(jsonObject1.getString("thumbnail"));
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //getting the new price
                 int discountPercentage = (int) (jsonObject1.getInt("price") * (1 - jsonObject1.getDouble("discountPercentage")/100));
-                Data.add(String.valueOf("$"+discountPercentage));//price
+                Data.add("$"+discountPercentage);//price
 
                 Data.add(jsonObject1.getString("stock"));
                 Data.add(jsonObject1.getString("discountPercentage"));

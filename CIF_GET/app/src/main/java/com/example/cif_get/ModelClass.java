@@ -8,19 +8,21 @@ public class ModelClass implements Serializable {
 
     JSONObject jsonObject;
 
-    String title, brand, thumbnail, description, price, stock, discountPercentage, rating, images;
+    String id,title, brand, thumbnail, description, price, stock, discountPercentage, rating, images;
 
     public String getTitle() {
         return title;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getBrand() {
         return brand;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
-    }
+    public String getThumbnail() { return thumbnail; }
 
     public String getDescription() {
         return description;
@@ -46,7 +48,8 @@ public class ModelClass implements Serializable {
         return images;
     }
 
-    public ModelClass(String title, String brand, String thumbnail, String description, String price, String stock, String discountPercentage, String rating, String images) {
+    public ModelClass(String id, String title, String brand, String thumbnail, String description, String price, String stock, String discountPercentage, String rating, String images) {
+        this.id = id;
         this.title = title;
         this.brand = brand;
         this.thumbnail = thumbnail;

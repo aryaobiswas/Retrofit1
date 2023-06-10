@@ -13,5 +13,4 @@
         android:id="@+id/RecyclerView"
         tools:ignore="MissingConstraints" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
