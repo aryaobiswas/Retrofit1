@@ -8,7 +8,29 @@ public class ModelClass implements Serializable {
 
     JSONObject jsonObject;
 
-    String id,title, brand, thumbnail, description, price, stock, discountPercentage, rating, images;
+    String id;
+    String title;
+    String brand;
+    String thumbnail;
+    String description;
+    String price;
+    String stock;
+    String discountPercentage;
+    String rating;
+    String images;
+    int count;
+
+    public ModelClass() {
+        // Empty constructor
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 
     public String getTitle() {
         return title;

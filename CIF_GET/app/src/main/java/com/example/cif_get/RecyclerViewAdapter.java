@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,13 +45,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ModelClass model = Data.get(position);
+        float discount = Float.parseFloat(model.price.substring(1)) * (1 - Float.parseFloat(model.discountPercentage) / 100.0f);
         holder.title.setText(model.title);
         holder.brand.setText(model.brand);
-        holder.price.setText(model.price);
+        holder.discount.setText(model.discountPercentage+"% off");
+        holder.originalprice.setText(model.price);
+        holder.price.setText("$"+Integer.toString((int)discount));
+        Log.d("recycler", "og price: "+model.price);
+        holder.ratings.setText(model.rating+" / 5");
         Glide.with(context)
                 .load(model.thumbnail)
                 .into(holder.itemImg);
         holder.description.setText(model.description);
+
+        holder.itemImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ItemActivity.class);
+                intent.putExtra("item", model);
+                context.startActivity(intent);
+            }
+        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,19 +76,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        holder.cartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    ModelClass cart = Data.get(adapterPosition);
-                    Intent intent = new Intent(context, CartActivity.class);
-                    intent.putExtra("cart", cart);
-                    context.startActivity(intent);
-
-                }
-            }
-        });
+//        holder.cartButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int adapterPosition = holder.getAdapterPosition();
+//                if (adapterPosition != RecyclerView.NO_POSITION) {
+//                    ModelClass cart = Data.get(adapterPosition);
+//                    Intent intent = new Intent(context, CartActivity.class);
+//                    intent.putExtra("cart", cart);
+//                    context.startActivity(intent);
+//
+//                }
+//            }
+//        });
 
 //        Log.d("Aryarecycler", "onResponse: "+"CartWorking");
     }
@@ -92,11 +107,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyItemRemoved(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
-        TextView title, price, brand, description;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView title, price, brand, description, originalprice, discount, ratings;
+        RatingBar ratingBar;
         ImageView itemImg;
         Button cartButton;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -105,8 +121,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             brand = itemView.findViewById(R.id.text_brand);
             price = itemView.findViewById(R.id.text_price);
             description = itemView.findViewById(R.id.description);
-            cartButton = itemView.findViewById(R.id.CartButton);
-
+            originalprice = itemView.findViewById(R.id.original_price);
+            discount = itemView.findViewById(R.id.text_discount);
+            ratings = itemView.findViewById(R.id.ratings);
+            // cartButton = itemView.findViewById(R.id.CartButton);
         }
     }
 

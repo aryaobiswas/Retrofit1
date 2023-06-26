@@ -13,23 +13,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="11dp">
 
             <ImageView
                 android:id="@+id/itemImage"
-                android:layout_width="100dp"
+                android:layout_width="95dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:maxWidth="100dp"
+                android:maxWidth="95dp"
                 android:scaleType="centerInside"
                 android:contentDescription="Item Image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginLeft="11dp"
+                android:layout_height="110dp"
+                android:layout_marginLeft="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -61,9 +61,18 @@
 
                         <TextView
                             android:id="@+id/description"
-                            android:layout_width="150dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="180dp"
+                            android:layout_height="35dp"
                             android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/ratings"
+                            android:layout_width="180dp"
+                            android:layout_height="35dp"
+                            android:textColor="#CFB824"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            android:text="5.0/5.0"/>
 
                     </LinearLayout>
 
@@ -72,22 +81,47 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/text_price"
+                        <LinearLayout
+                            android:id="@+id/discountlayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/CartButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_price"
-                            android:text="CART+"
-                            tools:ignore="TouchTargetSizeCheck" />
+                            <TextView
+                                android:id="@+id/text_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_below="@id/discountlayout"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="(50% off)"
+                                android:textColor="#1EB56B"
+                                android:id="@+id/text_discount"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/original_price"
+                                android:text="$20"
+                                android:textColor="#57000000"/>
+
+                        </LinearLayout>
+
+
+
+<!--                        <Button-->
+<!--                            android:id="@+id/CartButton"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_below="@+id/text_price"-->
+<!--                            android:text="CART+"-->
+<!--                            tools:ignore="TouchTargetSizeCheck" />-->
 
                     </RelativeLayout>
 

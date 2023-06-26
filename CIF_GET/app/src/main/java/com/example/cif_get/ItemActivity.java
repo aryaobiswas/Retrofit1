@@ -1,8 +1,11 @@
 package com.example.cif_get;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -25,9 +28,8 @@ public class ItemActivity extends AppCompatActivity {
 
         ModelClass item = (ModelClass) getIntent().getSerializableExtra("item");
 
-        Log.d("Arya1", "onResponse: " + "Model class working");
-
-        TextView title, price, brand, description, discount, rating;
+        TextView title, price, brand, description, discount, rating, originaprice;
+        Button addtocart;
         ImageSlider imageSlider;
         ArrayList<SlideModel> slideModels = new ArrayList<>();
         RatingBar ratingBar;
@@ -36,17 +38,21 @@ public class ItemActivity extends AppCompatActivity {
         price = findViewById(R.id.item_price);
         brand = findViewById(R.id.item_brand);
         discount = findViewById(R.id.item_discount);
+        originaprice = findViewById(R.id.original_price);
+        addtocart = findViewById(R.id.addtoCart);
         rating = findViewById(R.id.item_rating);
         description = findViewById(R.id.item_description);
         imageSlider = findViewById(R.id.image_slider);
 
         if (item != null) {
             title.setText(item.getTitle());
-            price.setText(String.valueOf(item.getPrice()));
+            originaprice.setText(String.valueOf(item.getPrice()));
             brand.setText(item.getBrand());
-            discount.setText(String.valueOf(item.getDiscountPercentage()));
-            rating.setText(String.valueOf(item.getRating()));
+            discount.setText(String.valueOf(item.getDiscountPercentage())+"% off");
+            rating.setText(String.valueOf(item.getRating())+" / 5");
             description.setText(item.getDescription());
+            float discountf = Float.parseFloat(item.getPrice().substring(1)) * (1 - Float.parseFloat(item.getDiscountPercentage())/ 100.0f);
+            price.setText("$"+Integer.toString((int)discountf));
 
             float storedRating = Float.parseFloat(String.valueOf(item.getRating()));
             ratingBar = findViewById(R.id.rating_Bar);
@@ -63,6 +69,16 @@ public class ItemActivity extends AppCompatActivity {
                 slideModels.add(new SlideModel(imageUrls[i], ScaleTypes.FIT));
             }
             imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+
+            addtocart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    ModelClass cart = item;
+                    Intent intent = new Intent(ItemActivity.this, CartActivity.class);
+                    intent.putExtra("item", item);
+                    startActivity(intent);
+                }
+            });
 
 
         } else {

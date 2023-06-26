@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +31,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageButton cartbutton = findViewById(R.id.cartButton);
+
+        cartbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ModelClass emptyCart = new ModelClass();
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                intent.putExtra("cart", emptyCart);
+                startActivity(intent);
+            }
+        });
 
         RecyclerView recyclerView=findViewById(R.id.RecyclerView);
 
@@ -94,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 Data.add(jsonObject1.getString("description"));
 
                 //getting the new price
-                int discountPercentage = (int) (jsonObject1.getInt("price") * (1 - jsonObject1.getDouble("discountPercentage")/100));
-                Data.add("$"+discountPercentage);//price
+//                int discountPercentage = (int) (jsonObject1.getInt("price") * (1 - jsonObject1.getDouble("discountPercentage")/100));
+//                Data.add("$"+discountPercentage);//price
 
+                Data.add("$"+String.valueOf(jsonObject1.getInt("price")));
                 Data.add(jsonObject1.getString("stock"));
                 Data.add(jsonObject1.getString("discountPercentage"));
                 Data.add(jsonObject1.getString("rating"));
